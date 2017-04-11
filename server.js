@@ -1,8 +1,18 @@
 var express = require("express");
 var app = express();
+var path = require('path');
 
 app.get('/',function(req,res){
-    res.send("Chao mung den voi server test cua Hoang Nam ^^");
+  var fileName = path.join(__dirname, 'index.html');
+  res.sendFile(fileName, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(err.status).end();
+    }
+    else {
+      console.log('Sent:', fileName);
+    }
+  });
 })
 
 app.get('/:datestring', function(req,res){
@@ -12,7 +22,6 @@ app.get('/:datestring', function(req,res){
         var month = monthArr[date.getMonth()];
         var year = date.getFullYear();
         var day = date.getDate();
-        
         var result = month + " " +day+" " + year;
         return result;
     }
